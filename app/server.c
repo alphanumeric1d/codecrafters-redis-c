@@ -60,18 +60,23 @@ int main() {
 
 	char buf[256];
 	int reading;
-	while(reading = read(socket, buf, sizeof(buf)-1) < 0)
+	while (true) {
 
-	printf("%d", reading);
+		while(reading = read(socket, buf, sizeof(buf)-1) < 0);
 
-	const char* response2ping = "+PONG\r\n";
-	int send_response = write(socket, response2ping, sizeof(response2ping)-1);
-	printf("%d", send_response);
-	if (send_response < 0) {
-		printf("sendind response failed");
+		printf("%d", reading);
+
+		const char* response2ping = "+PONG\r\n";
+
+		int send_response = write(socket, response2ping, sizeof(response2ping)-1);
+
+		printf("%d", send_response);
+
+		if (send_response < 0) {
+			printf("sendind response failed");
+		}
+
 	}
-
-
 
 
         close(server_fd);
