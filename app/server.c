@@ -14,16 +14,15 @@ int main() {
         // You can use print statements as follows for debugging, they'll be visible when running tests.
         printf("Logs from your program will appear here!\n");
 
-        
-        int server_fd, client_addr_len;
+	int server_fd, client_addr_len;
         struct sockaddr_in client_addr;
-        
+
         server_fd = socket(AF_INET, SOCK_STREAM, 0);
         if (server_fd == -1) {
              printf("Socket creation failed: %s...\n", strerror(errno));
              return 1;
         }
-        
+
         // Since the tester restarts your program quite often, setting REUSE_PORT
         // ensures that we don't run into 'Address already in use' errors
         int reuse = 1;
@@ -31,30 +30,41 @@ int main() {
              printf("SO_REUSEPORT failed: %s \n", strerror(errno));
              return 1;
         }
-        
+
         struct sockaddr_in serv_addr = { .sin_family = AF_INET ,
-                                                                      .sin_port = htons(6379),
-                                                                      .sin_addr = { htonl(INADDR_ANY) },
-                                                                     };
-              
+	.sin_port = htons(6379),
+	.sin_addr = { htonl(INADDR_ANY) },
+	};
+
         if (bind(server_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) != 0) {
              printf("Bind failed: %s \n", strerror(errno));
              return 1;
         }
-        
+
         int connection_backlog = 5;
         if (listen(server_fd, connection_backlog) != 0) {
              printf("Listen failed: %s \n", strerror(errno));
              return 1;
         }
 
-         printf("Waiting for a client to connect...\n");
-         client_addr_len = sizeof(client_addr);
+        printf("Waiting for a client to connect...\n");
+        client_addr_len = sizeof(client_addr);
+	printf("Client connected\n");
 
-         accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len);
-         printf("Client connected\n");
+        int socket = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len);
+	if (socket < 0) {
+		printf("accept failed");
+	}
 
-         close(server_fd);
+	const char* response2ping = "PONG";
+
+	int send_response = write(server_fd, response2ping, sizeof(response2ping));
+	if (send_response < 0) {
+		printf("sendind response failed");
+	}
+
+
+        close(server_fd);
 
         return 0;
 }
