@@ -56,11 +56,20 @@ int main() {
 		printf("accept failed");
 	}
 
-	const char* response2ping = "+PONG\n";;
 
-	int send_response = write(socket, response2ping, sizeof(response2ping)-1);
-	if (send_response < 0) {
-		printf("sendind response failed");
+
+	char buf[256];
+	int reading;
+	while(reading = read(socket, buf, sizeof(buf)-1) < 0){
+
+		if (reading == 1) {
+			const char* response2ping = "+PONG\n";;
+			int send_response = write(socket, response2ping, sizeof(response2ping)-1);
+			if (send_response < 0) {
+				printf("sendind response failed");
+			}
+		}
+
 	}
 
 
