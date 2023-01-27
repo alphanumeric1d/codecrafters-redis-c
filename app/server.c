@@ -61,7 +61,7 @@ int main() {
 	char buf[256];
 	int reading;
 
-	while (True) {
+	while (1) {
 
 		while(reading = read(socket, buf, sizeof(buf)-1) < 0);
 
