@@ -56,9 +56,9 @@ int main() {
 		printf("accept failed");
 	}
 
-	const char* response2ping = "PONG";
+	const char* response2ping = "+PONG\n";;
 
-	int send_response = write(server_fd, response2ping, sizeof(response2ping));
+	int send_response = write(server_fd, response2ping, sizeof(response2ping)-1);
 	if (send_response < 0) {
 		printf("sendind response failed");
 	}
