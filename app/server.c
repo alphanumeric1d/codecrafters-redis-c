@@ -7,6 +7,29 @@
 #include <errno.h>
 #include <unistd.h>
 
+
+void* respond(int* sock){
+
+	char buf[256];
+	int reading;
+
+	while(reading = read(sock, buf, sizeof(buf)-1) < 0);
+
+	printf("%d", reading);
+	const char* response2ping = "+PONG\r\n";
+
+	int send_response = write(socket, response2ping, sizeof(response2ping)-1);
+
+	printf("%d", send_response);
+
+	if (send_response < 0) {
+		printf("sendind response failed");
+	}
+
+	return NULL;
+}
+
+
 int main() {
         // Disable output buffering
         setbuf(stdout, NULL);
@@ -51,31 +74,21 @@ int main() {
         client_addr_len = sizeof(client_addr);
 	printf("Client connected\n");
 
-        int socket = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len);
-	if (socket < 0) {
-		printf("accept failed");
-	}
 
-	printf("%d", socket);
+	pthread_t thread[10];
 
-	char buf[256];
-	int reading;
-
-	while (1) {
-
-		while(reading = read(socket, buf, sizeof(buf)-1) < 0);
-
-		printf("%d", reading);
-
-		const char* response2ping = "+PONG\r\n";
-
-		int send_response = write(socket, response2ping, sizeof(response2ping)-1);
-
-		printf("%d", send_response);
-
-		if (send_response < 0) {
-			printf("sendind response failed");
+	int socket;
+	while (socket = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len)) {
+		if (socket < 0) {
+			printf("accept failed");
 		}
+		printf("%d", socket);
+
+		if(pthread_create(thread++, NULL, &respond, NULL) != 0){
+
+			printf("failed");
+		}
+
 
 	}
 
