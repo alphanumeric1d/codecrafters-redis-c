@@ -9,17 +9,17 @@
 #include <pthread.h>
 
 
-void* respond(int* sock){
+void* respond(void* sock){
 
 	char buf[256];
 	int reading;
 
-	while(reading = read(&sock, buf, sizeof(buf)-1) < 0);
+	while(reading = read(*(int*)sock, buf, sizeof(buf)-1) < 0);
 
 	printf("%d", reading);
 	const char* response2ping = "+PONG\r\n";
 
-	int send_response = write(&sock, response2ping, sizeof(response2ping)-1);
+	int send_response = write(*(int*)sock, response2ping, sizeof(response2ping)-1);
 
 	printf("%d", send_response);
 
@@ -77,6 +77,7 @@ int main() {
 
 
 	pthread_t thread[10];
+	size_t id = 0;
 
 	int socket;
 	while (socket = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len)) {
@@ -85,7 +86,7 @@ int main() {
 		}
 		printf("%d", socket);
 
-		if(pthread_create(&thread++, NULL, &respond, &socket) != 0){
+		if(pthread_create(&thread[id++], NULL, &respond, &socket) != 0){
 
 			printf("failed");
 		}
