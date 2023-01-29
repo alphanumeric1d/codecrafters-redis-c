@@ -14,11 +14,16 @@ void* respond(void* sock){
 	char buf[256];
 	int reading;
 
+	printf("CCCCC");
+
 	while(reading = read(*(int*)sock, buf, sizeof(buf)-1) < 0);
+
+	printf("DDDDD");
 
 	printf("%d", reading);
 	const char* response2ping = "+PONG\r\n";
 
+	printf("EEEEE");
 	int send_response = write(*(int*)sock, response2ping, sizeof(response2ping)-1);
 
 	printf("%d", send_response);
@@ -81,14 +86,19 @@ int main() {
 
 	while(1) {
 		while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len));
-			if (socket < 0) {
+			if (socket[sockid] < 0) {
 				printf("accept failed");
 			}
 			printf("socket: %d", socket[sockid]);
 
+			printf("AAAAA");
+
 			if(pthread_create(&thread[id++], NULL, &respond, &socket[sockid++]) != 0){
+
 				printf("failed");
+
 			}
+			printf("BBBBB");
 		}
 
 		for (int i = 0; i < 10; i++) {
