@@ -84,9 +84,7 @@ int main() {
 	int sockid = 0;
 	int socket[10];
 
-	while(1) {
-
-		while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len) != 0);
+	while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len)) {
 
 		if (socket[sockid] < 0) {
 
