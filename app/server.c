@@ -93,7 +93,10 @@ int main() {
 
 	for (int i = 0; i < 10; i++) {
 
-		pthread_join(thread[i], NULL);
+		if(pthread_join(thread[i], NULL) != 0){
+
+			printf("failed returning");
+		};
 
 	}
 
