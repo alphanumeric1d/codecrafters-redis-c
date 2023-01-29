@@ -85,7 +85,7 @@ int main() {
 	size_t id = 0;
 	int sockid = 0;
 	int socket[10];
-
+while(1){
 	while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len)) {
 
 		if (socket[sockid] < 0) {
@@ -107,7 +107,7 @@ int main() {
 		printf("BBBBB");
 
 	}
-
+}
 	for (int i = 0; i < 10; i++) {
 
 		if(pthread_join(thread[i], NULL) != 0){
