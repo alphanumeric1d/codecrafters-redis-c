@@ -89,7 +89,7 @@ int main() {
 			printf("failed");
 		}
 
-		pthread_join(&thread[id++], NULL);
+		pthread_join(thread[id++], NULL);
 	}
         close(server_fd);
 
