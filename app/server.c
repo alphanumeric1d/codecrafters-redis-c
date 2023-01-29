@@ -75,7 +75,6 @@ int main() {
         client_addr_len = sizeof(client_addr);
 	printf("Client connected\n");
 
-
 	pthread_t thread[10];
 	size_t id = 0;
 
@@ -84,17 +83,12 @@ int main() {
 		if (socket < 0) {
 			printf("accept failed");
 		}
-		printf("%d", socket);
+		printf(socket: "%d", socket);
 
 		if(pthread_create(&thread[id++], NULL, &respond, &socket) != 0){
-
 			printf("failed");
 		}
-
-
 	}
-
-
         close(server_fd);
 
         return 0;
