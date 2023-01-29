@@ -26,6 +26,8 @@ void* respond(void* sock){
 	printf("EEEEE");
 	int send_response = write(*(int*)sock, response2ping, sizeof(response2ping)-1);
 
+	printf("FFFFF");
+
 	printf("%d", send_response);
 
 	if (send_response < 0) {
