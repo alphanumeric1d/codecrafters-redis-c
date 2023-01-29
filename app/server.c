@@ -83,7 +83,7 @@ int main() {
 		if (socket < 0) {
 			printf("accept failed");
 		}
-		printf(socket: "%d", socket);
+		printf("socket: %d", socket);
 
 		if(pthread_create(&thread[id++], NULL, &respond, &socket) != 0){
 			printf("failed");
