@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-
+//bool EXIT[10];
 void* respond(void* sock){
 
 	char buf[256];
@@ -85,7 +85,10 @@ int main() {
 	size_t id = 0;
 	int sockid = 0;
 	int socket[10];
+//	bool exit[10];
+
 while(1){
+
 	while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len)) {
 
 		if (socket[sockid] < 0) {
@@ -107,15 +110,20 @@ while(1){
 		printf("BBBBB");
 
 	}
+
 }
 	for (int i = 0; i < 10; i++) {
 
-		if(pthread_join(thread[i], NULL) != 0){
-			printf("failed returning");
-		}
+//		if(EXIT[i] == 1){
+			if(pthread_join(thread[i], NULL) != 0){
+				printf("failed returning");
+			}
+//		}
 
 	}
 
+
+//}
         close(server_fd);
 
         return 0;
