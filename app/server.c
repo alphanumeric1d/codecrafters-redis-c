@@ -27,7 +27,7 @@ void* respond(void* sock){
 		printf("sendind response failed");
 	}
 
-	return NULL;
+	//return NULL;
 }
 
 
