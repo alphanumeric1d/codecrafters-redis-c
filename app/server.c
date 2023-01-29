@@ -85,12 +85,18 @@ int main() {
 		}
 		printf("socket: %d", socket);
 
-		if(pthread_create(&thread[id], NULL, &respond, &socket) != 0){
+		if(pthread_create(&thread[id++], NULL, &respond, &socket) != 0){
 			printf("failed");
 		}
 
-		pthread_join(thread[id++], NULL);
 	}
+
+	for (int i = 0; i < 10; i++) {
+
+		pthread_join(thread[i], NULL);
+
+	}
+
         close(server_fd);
 
         return 0;
