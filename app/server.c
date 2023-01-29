@@ -85,7 +85,8 @@ int main() {
 	int socket[10];
 
 	while(1) {
-		while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len));
+
+		while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len) != 0);
 			if (socket[sockid] < 0) {
 				printf("accept failed");
 			}
