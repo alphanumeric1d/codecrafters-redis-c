@@ -87,28 +87,37 @@ int main() {
 	while(1) {
 
 		while (socket[sockid] = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_len) != 0);
-			if (socket[sockid] < 0) {
-				printf("accept failed");
-			}
-			printf("socket: %d", socket[sockid]);
 
-			printf("AAAAA");
+		if (socket[sockid] < 0) {
 
-			if(pthread_create(&thread[id++], NULL, &respond, &socket[sockid++]) != 0){
+			printf("accept failed");
 
-				printf("failed");
-
-			}
-			printf("BBBBB");
 		}
 
-		for (int i = 0; i < 10; i++) {
-			if(pthread_join(thread[i], NULL) != 0){
-				printf("failed returning");
-			};
+		printf("socket: %d", socket[sockid]);
+
+		printf("AAAAA");
+
+		if(pthread_create(&thread[id++], NULL, &respond, &socket[sockid++]) != 0){
+
+			printf("failed");
+
+		}
+
+		printf("BBBBB");
+
+	}
+
+	for (int i = 0; i < 10; i++) {
+
+		if(pthread_join(thread[i], NULL) != 0){
+			printf("failed returning");
+		}
+
 	}
 
         close(server_fd);
 
         return 0;
+
 }
